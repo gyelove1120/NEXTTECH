@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>넥스트 기술 패권 — 기획 위키</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf8;--sb:#f0efeb;--card:#fff;--tx:#1a1a1a;--sub:#7a7a72;--lt:#b0b0a8;--bd:#e8e7e3;--ac:#c8553a;--acbg:#fdf5f3;--bl:#3a6bc8;--blbg:#edf2fb;--gn:#3a8c5c;--gnbg:#edf7f1;--pr:#7c5cbf;--prbg:#f3f0fa;--yl:#d97706;--ylbg:#fef9c3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);display:flex;height:100vh;overflow:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:10px}
+button{font-family:inherit;cursor:pointer}input,textarea,select{font-family:inherit}textarea{resize:vertical}
+
+/* SIDEBAR */
+#S{width:250px;min-width:250px;background:var(--sb);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden;transition:all .2s}
+#S.c{width:0;min-width:0;border:none}
+.sh{padding:20px 16px 14px}.sh h1{font-family:'Nanum Myeongjo',serif;font-size:17px;font-weight:800;letter-spacing:-.5px;line-height:1.3}.sh p{font-size:10px;color:var(--sub);margin-top:3px}
+#TL{flex:1;overflow-y:auto;padding:4px 8px 8px}
+.ti{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--sub);transition:all .1s;user-select:none}
+.ti:hover{background:rgba(0,0,0,.04);color:var(--tx)}.ti.a{background:var(--card);color:var(--tx);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.ti .i{font-size:14px;width:20px;text-align:center;flex-shrink:0}.ti .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ti .d{opacity:0;background:none;border:none;color:var(--lt);font-size:11px;padding:2px 4px;transition:opacity .1s}.ti:hover .d{opacity:1}.ti .d:hover{color:var(--ac)}
+.th{margin-bottom:6px;border-bottom:1px solid var(--bd);padding-bottom:10px}
+#AB{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:8px;border:none;background:none;font-size:12px;color:var(--lt);width:100%;margin-top:4px;transition:all .1s}#AB:hover{background:rgba(0,0,0,.04);color:var(--sub)}
+.sf{padding:8px 16px;border-top:1px solid var(--bd);font-size:9px;color:var(--lt)}
+
+/* MAIN */
+#M{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#TB{height:46px;padding:0 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd);background:var(--card);flex-shrink:0}
+.tg{background:none;border:none;font-size:15px;color:var(--lt);padding:4px}.tm{font-size:10px;color:var(--lt)}.sp{flex:1}
+.tb{padding:4px 12px;border-radius:6px;border:1px solid var(--bd);background:var(--card);font-size:11px;color:var(--sub);transition:all .1s}.tb:hover{border-color:var(--lt)}
+.tb.dk{background:var(--tx);color:#fff;border:none;font-weight:600}.tb.dk:hover{opacity:.85}
+
+#CT{flex:1;overflow-y:auto}
+#CI{max-width:820px;margin:0 auto;padding:36px 32px 120px}
+
+/* STAT */
+.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:28px}
+.sc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+.sc .br{position:absolute;top:0;left:0;right:0;height:3px}.sc .nm{font-size:26px;font-weight:800;font-family:'Nanum Myeongjo',serif}.sc .lb{font-size:10px;color:var(--sub);margin-top:2px}
+
+/* TIMELINE */
+.tlm{display:flex;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:var(--card);margin-bottom:28px}
+.tmo{flex:1;min-width:0}.tmo:not(:last-child){border-right:1px solid var(--bd)}
+.tmh{padding:10px 14px;background:var(--sb);font-size:12px;font-weight:700;text-align:center;border-bottom:1px solid var(--bd)}
+.tmb{padding:8px;min-height:100px}
+.tli{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:7px;margin-bottom:4px;font-size:11px;line-height:1.4;transition:background .1s}.tli:hover{background:var(--sb)}
+.tld{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}.tlt{flex:1}.tlw{font-size:9px;color:var(--lt);white-space:nowrap}
+.tla{width:100%;padding:5px;border-radius:6px;border:1px dashed var(--bd);background:none;font-size:11px;color:var(--lt);margin-top:4px;transition:all .1s}.tla:hover{border-color:var(--sub);color:var(--sub)}
+
+/* ARTICLE PLAN (big card at top) */
+.plan-card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px;margin-bottom:24px;border-left:4px solid var(--ac)}
+.plan-card .lbl{font-size:10px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.plan-title{font-family:'Nanum Myeongjo',serif;font-size:20px;font-weight:800;border:none;outline:none;width:100%;background:transparent;color:var(--tx);margin-bottom:8px}
+.plan-title::placeholder{color:var(--lt)}
+.plan-body{font-size:14px;line-height:1.85;color:#445;border:none;outline:none;width:100%;background:transparent;resize:none;min-height:60px;overflow:hidden}
+.plan-body::placeholder{color:var(--lt)}
+.plan-meta{display:flex;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
+.plan-st{font-size:10px;font-weight:600;padding:3px 10px;border-radius:6px;border:none;cursor:pointer}
+
+/* SECTION */
+.sec{margin-bottom:6px}
+.sec-head{width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--bd);background:var(--card);border-radius:10px;font-size:13px;font-weight:700;color:var(--tx);text-align:left;transition:all .1s}
+.sec-head:hover{background:var(--sb)}
+.sec-head .aw{transition:transform .2s;font-size:9px;color:var(--lt)}.sec-head .aw.op{transform:rotate(90deg)}
+.sec-head .bg{font-size:10px;font-weight:600;padding:1px 7px;border-radius:5px;margin-left:auto}
+.sec-body{background:var(--card);border:1px solid var(--bd);border-top:none;border-radius:0 0 10px 10px;padding:14px;margin-top:-2px;margin-bottom:10px}
+
+/* UPDATE LOG */
+.upd{padding:10px 14px;border-left:3px solid var(--bl);background:var(--blbg);border-radius:0 8px 8px 0;margin-bottom:6px;position:relative}
+.upd .dt{font-size:10px;color:var(--bl);font-weight:600;margin-bottom:3px}
+.upd .ctx{font-size:13px;line-height:1.6;color:#334}
+.upd .xd{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--lt);font-size:11px;opacity:0;transition:opacity .1s}.upd:hover .xd{opacity:1}
+
+/* EMAIL */
+.em{padding:12px 14px;border-radius:10px;border:1px solid var(--bd);margin-bottom:6px;position:relative}
+.em .dir{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;margin-bottom:4px}
+.em .dir.out{background:var(--prbg);color:var(--pr)}.em .dir.in{background:var(--gnbg);color:var(--gn)}
+.em .who{font-size:11px;color:var(--sub);margin-bottom:3px}
+.em .subj{font-size:13px;font-weight:600;margin-bottom:3px}
+.em .bd{font-size:12px;color:#556;line-height:1.6}
+.em .xd{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--lt);font-size:11px;opacity:0;transition:opacity .1s}.em:hover .xd{opacity:1}
+
+/* FILE */
+.fl{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--sb);border-radius:10px;border:1px solid var(--bd);margin-bottom:6px}
+.fl .fn{font-size:12px;font-weight:500;flex:1}.fl .fs{font-size:10px;color:var(--lt)}.fl .nt{font-size:10px;color:var(--sub);font-style:italic}
+.fl .fd{background:none;border:none;color:var(--lt);font-size:11px}.fl .fd:hover{color:var(--ac)}
+
+/* ADD BTN */
+.ae{width:100%;padding:7px;border-radius:7px;border:1px dashed var(--bd);background:none;font-size:12px;color:var(--lt);transition:all .1s}.ae:hover{border-color:var(--sub);color:var(--sub)}
+
+/* MODAL */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000}
+.mdl{background:var(--card);border-radius:14px;width:92%;max-width:440px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.mdl h3{font-size:15px;font-weight:700;margin-bottom:16px}
+.mdl label{display:block;font-size:11px;font-weight:600;color:var(--sub);margin-bottom:4px}
+.mdl input,.mdl textarea,.mdl select{width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--bd);font-size:13px;outline:none;margin-bottom:10px}
+.mdl input:focus,.mdl textarea:focus{border-color:var(--sub)}
+.mdl .bt{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.mdl .bt button{padding:8px 18px;border-radius:8px;font-size:12px;font-weight:500}
+.mdl .cc{border:1px solid var(--bd);background:var(--card);color:var(--sub)}.mdl .ok{border:none;background:var(--tx);color:#fff;font-weight:600}
+
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--tx);color:#fff;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.2);opacity:0;transition:all .25s;z-index:9999;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<aside id="S"><div class="sh"><h1>넥스트<br>기술 패권</h1><p>기획 위키 · 기사 시리즈</p></div><div id="TL"></div><button id="AB" onclick="openM('addTab')">+ 새 기획 탭</button><div class="sf">브라우저에 자동 저장</div></aside>
+<div id="M"><div id="TB"><button class="tg" onclick="document.getElementById('S').classList.toggle('c')">☰</button><span class="tm" id="TM"></span><span class="sp"></span><button class="tb dk" onclick="exportAll()">📋 전체 복사</button></div><div id="CT"><div id="CI"></div></div></div>
+<div id="toast"></div>
+<script>
+var SK="thw5",ICONS=["📄","🧠","⚡","⚛️","🤖","🧬","🚀","🔋","📡","🛡️","⛏️","🌐","💡","📊","🔬","🎯","📝","💻","🏭","⚙️","🔥","🎨","📌","🗂️"];
+var STS=[{k:"idea",l:"아이디어",c:"#94a3b8",b:"#f1f5f9"},{k:"research",l:"취재중",c:"#d97706",b:"#fef9c3"},{k:"writing",l:"작성중",c:"#3a6bc8",b:"#edf2fb"},{k:"review",l:"검토",c:"#7c5cbf",b:"#f3f0fa"},{k:"done",l:"완료",c:"#3a8c5c",b:"#edf7f1"}];
+var D={
+  tabs:[{id:"home",name:"메인",icon:"🏠",fixed:1},{id:"t1",name:"AI·거대모델",icon:"🧠"},{id:"t2",name:"반도체",icon:"⚡"},{id:"t3",name:"양자컴퓨팅",icon:"⚛️"}],
+  plans:[
+    {id:"pl1",tabId:"t1",title:"딥시크 쇼크 이후, 미중 AI 격차는 좁혀졌나",body:"딥시크의 저가형 칩 고효율 모델이 가져온 충격.\n미국 GPU 수출 제한에도 중국은 자체 칩으로 추격 중.\n\n핵심 질문:\n- 딥시크 R1의 기술적 의미는?\n- 미국 규제는 실효성이 있나?\n- 한국 AI 생태계에 미치는 영향은?",status:"research"},
+    {id:"pl2",tabId:"t2",title:"2nm 전쟁 — 파운드리 3강의 사활",body:"TSMC vs 삼성 vs 인텔.\n미국 CHIPS Act 이후 반도체 자국화 현황과 각국 전략 비교.\n\n핵심 질문:\n- 초미세공정에서 삼성의 가능성은?\n- HBM 시장 주도권은 누구에게?\n- 유리기판 등 차세대 패키징 변수는?",status:"research"},
+    {id:"pl3",tabId:"t3",title:"양자컴퓨터 상용화 원년? — 기대와 현실 사이",body:"양자 우위 논쟁의 현재.\n양자내성암호(PQC) 전환 동향.\n\n핵심 질문:\n- 실제 산업 적용은 언제쯤?\n- AI+양자컴퓨팅 결합 가능성은?",status:"idea"}
+  ],
+  updates:[
+    {id:"u1",tabId:"t1",date:"2026-03-01",content:"딥시크 R1 모델 기술 분석 자료 확보. 저가형 칩으로 GPT-4 수준 성능 달성한 구조 파악 필요."},
+    {id:"u2",tabId:"t1",date:"2026-03-03",content:"서울대 AI연구원 김교수 인터뷰 일정 확정 (3/7). 딥시크 기술적 의미와 한국 AI 산업 영향 중심."},
+    {id:"u3",tabId:"t2",date:"2026-03-02",content:"TSMC 애리조나 공장 가동 현황 자료 입수. 삼성 파운드리 관계자 접촉 시도 중."}
+  ],
+  emails:[
+    {id:"e1",tabId:"t1",dir:"out",to:"김교수 (서울대 AI연구원)",subject:"딥시크 관련 인터뷰 요청",body:"교수님 안녕하세요.\n넥스트 기술 패권 기획 시리즈 취재 중입니다.\n딥시크 쇼크 관련 전문가 코멘트를 부탁드립니다.",date:"2026-03-02"},
+    {id:"e2",tabId:"t1",dir:"in",to:"김교수 (서울대 AI연구원)",subject:"Re: 딥시크 관련 인터뷰 요청",body:"안녕하세요. 3월 7일 오후 2시에 연구실에서 뵙겠습니다.",date:"2026-03-03"}
+  ],
+  files:[
+    {id:"f1",tabId:"t1",name:"딥시크_기술분석_메모.docx",size:"340 KB",note:"R1 모델 구조 분석"},
+    {id:"f2",tabId:"t1",name:"미중_AI_규제_타임라인.xlsx",size:"128 KB",note:"2023~2026 규제 연표"},
+    {id:"f3",tabId:"t2",name:"글로벌_파운드리_시장점유율.pdf",size:"2.1 MB",note:"2025 4Q 기준"}
+  ],
+  timeline:[
+    {id:"tl1",month:3,week:1,text:"10대 기술 선정 확정",color:"#c8553a"},
+    {id:"tl2",month:3,week:2,text:"AI·반도체 분야 취재",color:"#3a6bc8"},
+    {id:"tl3",month:3,week:3,text:"양자·로봇·바이오 취재",color:"#3a6bc8"},
+    {id:"tl4",month:4,week:1,text:"1차 원고 마감",color:"#c8553a"},
+    {id:"tl5",month:4,week:2,text:"편집부 검토",color:"#7c5cbf"},
+    {id:"tl6",month:4,week:3,text:"수정 및 교차 검증",color:"#7c5cbf"},
+    {id:"tl7",month:5,week:1,text:"최종 원고 확정",color:"#3a8c5c"},
+    {id:"tl8",month:5,week:2,text:"디자인·레이아웃",color:"#3a8c5c"},
+    {id:"tl9",month:5,week:3,text:"발행",color:"#c8553a"}
+  ],
+  tg:{}
+},at="home",mCtx={};
+
+function sv(){try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){}}
+function ld(){try{var r=localStorage.getItem(SK);if(r)D=JSON.parse(r)}catch(e){}}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2200)}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function autoH(el){el.style.height='auto';el.style.height=el.scrollHeight+'px'}
+function today(){return new Date().toISOString().split('T')[0]}
+
+function rSb(){
+  var h='';D.tabs.forEach(function(t){
+    h+='<div class="ti '+(t.id===at?'a':'')+' '+(t.fixed?'th':'')+'" onclick="at=\''+t.id+'\';rr()"><span class="i">'+t.icon+'</span><span class="n">'+esc(t.name)+'</span>'+(t.fixed?'':'<button class="d" onclick="event.stopPropagation();dTab(\''+t.id+'\')">✕</button>')+'</div>';
+  });document.getElementById('TL').innerHTML=h;
+}
+
+function dTab(id){if(!confirm('이 기획 탭을 삭제하시겠습니까?'))return;D.tabs=D.tabs.filter(function(t){return t.id!==id});D.plans=D.plans.filter(function(p){return p.tabId!==id});D.updates=D.updates.filter(function(u){return u.tabId!==id});D.files=D.files.filter(function(f){return f.tabId!==id});D.emails=D.emails.filter(function(e){return e.tabId!==id});if(at===id)at='home';sv();rr();toast('탭 삭제됨')}
+
+function rr(){rSb();var ci=document.getElementById('CI'),tab=D.tabs.find(function(t){return t.id===at});document.getElementById('TM').textContent=tab?tab.icon+' '+tab.name:'';if(at==='home')rHome(ci);else rTab(ci,tab)}
+
+// ============ HOME ============
+function rHome(el){
+  var tp=D.plans.length,dn=D.plans.filter(function(p){return p.status==='done'}).length,tb=D.tabs.filter(function(t){return!t.fixed}).length;
+  var h='<div style="margin-bottom:28px"><h2 style="font-family:Nanum Myeongjo,serif;font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">넥스트 기술 패권</h2><p style="font-size:13px;color:var(--sub)">10대 핵심 기술 분야 기사 기획 프로젝트</p></div>';
+  h+='<div class="sr"><div class="sc"><div class="br" style="background:var(--bl)"></div><div class="nm" style="color:var(--bl)">'+tb+'</div><div class="lb">기획 분야</div></div><div class="sc"><div class="br" style="background:var(--ac)"></div><div class="nm" style="color:var(--ac)">'+tp+'</div><div class="lb">기획안</div></div><div class="sc"><div class="br" style="background:var(--gn)"></div><div class="nm" style="color:var(--gn)">'+dn+'</div><div class="lb">완료</div></div><div class="sc"><div class="br" style="background:var(--pr)"></div><div class="nm" style="color:var(--pr)">'+D.files.length+'</div><div class="lb">자료</div></div></div>';
+  h+='<h3 style="font-family:Nanum Myeongjo,serif;font-size:18px;font-weight:800;margin-bottom:12px">프로젝트 타임라인</h3><div class="tlm">';
+  [3,4,5].forEach(function(m){
+    var items=D.timeline.filter(function(t){return t.month===m}).sort(function(a,b){return a.week-b.week});
+    h+='<div class="tmo"><div class="tmh">'+m+'월</div><div class="tmb">';
+    items.forEach(function(it){h+='<div class="tli"><div class="tld" style="background:'+it.color+'"></div><div class="tlt">'+esc(it.text)+'</div><div class="tlw">'+it.week+'주</div><button onclick="D.timeline=D.timeline.filter(function(x){return x.id!==\''+it.id+'\'});sv();rr()" style="background:none;border:none;color:var(--lt);font-size:10px;opacity:.3;cursor:pointer" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">✕</button></div>'});
+    h+='<button class="tla" onclick="openM(\'addTL\',{month:'+m+'})">+ 추가</button></div></div>';
+  });
+  h+='</div>';
+  h+='<h3 style="font-size:15px;font-weight:700;margin:20px 0 12px">분야별 현황</h3>';
+  D.tabs.filter(function(t){return!t.fixed}).forEach(function(t){
+    var ps=D.plans.filter(function(p){return p.tabId===t.id}),d2=ps.filter(function(p){return p.status==='done'}).length,pct=ps.length?Math.round(d2/ps.length*100):0;
+    var plan=ps[0];var stL=plan?(STS.find(function(s){return s.k===plan.status})||STS[0]):null;
+    h+='<div onclick="at=\''+t.id+'\';rr()" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;cursor:pointer;margin-bottom:4px;transition:background .1s;border:1px solid var(--bd);background:var(--card)" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.04)\'" onmouseout="this.style.boxShadow=\'none\'">';
+    h+='<span style="font-size:18px;width:28px;text-align:center">'+t.icon+'</span>';
+    h+='<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">'+esc(t.name)+'</div>';
+    if(plan)h+='<div style="font-size:11px;color:var(--sub);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(plan.title)+'</div>';
+    h+='</div>';
+    if(stL)h+='<span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;background:'+stL.b+';color:'+stL.c+'">'+stL.l+'</span>';
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+
+// ============ TAB CONTENT ============
+function rTab(el,tab){
+  var plan=D.plans.find(function(p){return p.tabId===tab.id});
+  var ups=D.updates.filter(function(u){return u.tabId===tab.id}).sort(function(a,b){return b.date>a.date?1:-1});
+  var ems=D.emails.filter(function(e){return e.tabId===tab.id}).sort(function(a,b){return b.date>a.date?1:-1});
+  var fls=D.files.filter(function(f){return f.tabId===tab.id});
+  if(!D.tg[tab.id])D.tg[tab.id]={upd:1,email:1,file:0};
+  var tg=D.tg[tab.id];
+
+  var h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:24px"><span style="font-size:28px">'+tab.icon+'</span><h2 style="font-family:Nanum Myeongjo,serif;font-size:22px;font-weight:800;letter-spacing:-.5px">'+esc(tab.name)+'</h2></div>';
+
+  // 1) ARTICLE PLAN — always visible at top
+  if(plan){
+    var st=STS.find(function(s){return s.k===plan.status})||STS[0];
+    h+='<div class="plan-card"><div class="lbl">📰 기사 기획안</div>';
+    h+='<input class="plan-title" value="'+esc(plan.title)+'" placeholder="기사 제목" oninput="upd(D.plans,\''+plan.id+'\',\'title\',this.value)">';
+    h+='<textarea class="plan-body" placeholder="기사 방향, 핵심 질문, 취재 포인트..." oninput="upd(D.plans,\''+plan.id+'\',\'body\',this.value);autoH(this)">'+esc(plan.body)+'</textarea>';
+    h+='<div class="plan-meta"><select class="plan-st" style="background:'+st.b+';color:'+st.c+'" onchange="upd(D.plans,\''+plan.id+'\',\'status\',this.value);sv();rr()">';
+    STS.forEach(function(s){h+='<option value="'+s.k+'" '+(plan.status===s.k?'selected':'')+'>'+s.l+'</option>'});
+    h+='</select><span style="font-size:10px;color:var(--lt)">기획안 삭제 후 새로 만들려면 탭을 재생성하세요</span></div></div>';
+  } else {
+    h+='<div class="plan-card" style="text-align:center;padding:32px"><div class="lbl">📰 기사 기획안</div><p style="color:var(--lt);font-size:13px;margin-bottom:12px">아직 기획안이 없습니다</p><button class="ae" style="width:auto;display:inline-block;padding:8px 20px" onclick="D.plans.push({id:uid(),tabId:\''+tab.id+'\',title:\'\',body:\'\',status:\'idea\'});sv();rr()">+ 기획안 작성</button></div>';
+  }
+
+  // 2) UPDATES
+  h+='<div class="sec"><button class="sec-head" onclick="D.tg[\''+tab.id+'\'].upd=!D.tg[\''+tab.id+'\'].upd;sv();rr()"><span class="aw '+(tg.upd?'op':'')+'">▶</span>📋 기사 업데이트<span class="bg" style="background:var(--blbg);color:var(--bl)">'+ups.length+'</span></button>';
+  if(tg.upd){
+    h+='<div class="sec-body">';
+    ups.forEach(function(u){
+      h+='<div class="upd"><button class="xd" onclick="D.updates=D.updates.filter(function(x){return x.id!==\''+u.id+'\'});sv();rr()">✕</button><div class="dt">'+esc(u.date)+'</div><div class="ctx">'+esc(u.content).replace(/\n/g,'<br>')+'</div></div>';
+    });
+    h+='<button class="ae" onclick="openM(\'addUpd\',{tabId:\''+tab.id+'\'})">+ 업데이트 추가</button></div>';
+  }
+  h+='</div>';
+
+  // 3) EMAILS
+  h+='<div class="sec"><button class="sec-head" onclick="D.tg[\''+tab.id+'\'].email=!D.tg[\''+tab.id+'\'].email;sv();rr()"><span class="aw '+(tg.email?'op':'')+'">▶</span>✉️ 이메일 교환 현황<span class="bg" style="background:var(--prbg);color:var(--pr)">'+ems.length+'</span></button>';
+  if(tg.email){
+    h+='<div class="sec-body">';
+    ems.forEach(function(e){
+      var isOut=e.dir==='out';
+      h+='<div class="em"><button class="xd" onclick="D.emails=D.emails.filter(function(x){return x.id!==\''+e.id+'\'});sv();rr()">✕</button><span class="dir '+(isOut?'out':'in')+'">'+(isOut?'보냄 →':'← 받음')+'</span> <span style="font-size:10px;color:var(--lt)">'+esc(e.date)+'</span><div class="who">'+esc(e.to)+'</div><div class="subj">'+esc(e.subject)+'</div><div class="bd">'+esc(e.body).replace(/\n/g,'<br>')+'</div></div>';
+    });
+    h+='<button class="ae" onclick="openM(\'addEmail\',{tabId:\''+tab.id+'\'})">+ 이메일 추가</button></div>';
+  }
+  h+='</div>';
+
+  // 4) FILES
+  h+='<div class="sec"><button class="sec-head" onclick="D.tg[\''+tab.id+'\'].file=!D.tg[\''+tab.id+'\'].file;sv();rr()"><span class="aw '+(tg.file?'op':'')+'">▶</span>📎 파일 자료실<span class="bg" style="background:var(--sb);color:var(--sub)">'+fls.length+'</span></button>';
+  if(tg.file){
+    h+='<div class="sec-body">';
+    fls.forEach(function(f){
+      h+='<div class="fl"><span style="font-size:17px">📄</span><span class="fn">'+esc(f.name)+'</span>'+(f.note?'<span class="nt">'+esc(f.note)+'</span>':'')+'<span class="fs">'+esc(f.size)+'</span><button class="fd" onclick="D.files=D.files.filter(function(x){return x.id!==\''+f.id+'\'});sv();rr();toast(\'삭제됨\')">✕</button></div>';
+    });
+    h+='<button class="ae" onclick="openM(\'addFile\',{tabId:\''+tab.id+'\'})">+ 자료 추가</button></div>';
+  }
+  h+='</div>';
+
+  el.innerHTML=h;
+  el.querySelectorAll('.plan-body').forEach(autoH);
+}
+
+function upd(arr,id,k,v){var o=arr.find(function(x){return x.id===id});if(o){o[k]=v;sv()}}
+
+// ============ MODAL ============
+function openM(type,ctx){
+  mCtx=ctx||{};var bg=document.createElement('div');bg.className='mbg';bg.id='mbg';bg.onclick=function(e){if(e.target===bg)clM()};var i='';
+  if(type==='addTab'){
+    i='<h3>새 기획 탭</h3><label>이름</label><input id="mn" placeholder="예: 로봇·피지컬AI" autofocus><label>아이콘</label><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">'+ICONS.map(function(ic){return'<button onclick="document.getElementById(\'mi\').value=\''+ic+'\';this.parentElement.querySelectorAll(\'button\').forEach(function(b){b.style.background=\'\'});this.style.background=\'var(--sb)\'" style="font-size:18px;background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:6px">'+ic+'</button>'}).join('')+'</div><input id="mi" type="hidden" value="📄"><div class="bt"><button class="cc" onclick="clM()">취소</button><button class="ok" onclick="sAT()">추가</button></div>';
+  } else if(type==='addUpd'){
+    i='<h3>📋 업데이트 추가</h3><label>날짜</label><input id="mud" type="date" value="'+today()+'"><label>내용</label><textarea id="muc" rows="4" placeholder="취재 진행 상황, 변경 사항 등..." autofocus style="resize:vertical"></textarea><div class="bt"><button class="cc" onclick="clM()">취소</button><button class="ok" onclick="sAU()">추가</button></div>';
+  } else if(type==='addEmail'){
+    i='<h3>✉️ 이메일 추가</h3><label>구분</label><select id="med"><option value="out">보냄 →</option><option value="in">← 받음</option></select><label>상대방</label><input id="met" placeholder="이름 (소속)" autofocus><label>제목</label><input id="mes" placeholder="메일 제목"><label>내용</label><textarea id="meb" rows="3" placeholder="메일 내용" style="resize:vertical"></textarea><label>날짜</label><input id="medt" type="date" value="'+today()+'"><div class="bt"><button class="cc" onclick="clM()">취소</button><button class="ok" onclick="sAE()">추가</button></div>';
+  } else if(type==='addFile'){
+    i='<h3>📎 자료 추가</h3><label>파일명</label><input id="mfn" placeholder="예: 분석자료.pdf" autofocus><label>크기 (선택)</label><input id="mfs" placeholder="예: 2.1 MB"><label>메모 (선택)</label><input id="mfm" placeholder="파일 설명"><div class="bt"><button class="cc" onclick="clM()">취소</button><button class="ok" onclick="sAF()">추가</button></div>';
+  } else if(type==='addTL'){
+    i='<h3>📅 타임라인 추가 ('+mCtx.month+'월)</h3><label>내용</label><input id="mtt" placeholder="예: 1차 원고 마감" autofocus><label>주차</label><select id="mtw"><option value="1">1주</option><option value="2">2주</option><option value="3">3주</option><option value="4">4주</option></select><label>색상</label><div style="display:flex;gap:6px;margin-bottom:12px">'+['#c8553a','#3a6bc8','#3a8c5c','#7c5cbf','#d97706'].map(function(c){return'<button onclick="document.getElementById(\'mtc\').value=\''+c+'\';this.parentElement.querySelectorAll(\'button\').forEach(function(b){b.style.outline=\'\'});this.style.outline=\'2px solid var(--tx)\'" style="width:24px;height:24px;border-radius:50%;border:none;cursor:pointer;background:'+c+'"></button>'}).join('')+'</div><input id="mtc" type="hidden" value="#3a6bc8"><div class="bt"><button class="cc" onclick="clM()">취소</button><button class="ok" onclick="sATL()">추가</button></div>';
+  }
+  bg.innerHTML='<div class="mdl">'+i+'</div>';document.body.appendChild(bg);
+  setTimeout(function(){var inp=bg.querySelector('input:not([type=hidden]),textarea');if(inp)inp.focus()},50);
+}
+function clM(){var el=document.getElementById('mbg');if(el)el.remove()}
+function sAT(){var n=document.getElementById('mn').value.trim(),ic=document.getElementById('mi').value||'📄';if(!n)return;var id=uid();D.tabs.push({id:id,name:n,icon:ic});at=id;sv();clM();rr();toast('탭 추가됨')}
+function sAU(){var d=document.getElementById('mud').value,c=document.getElementById('muc').value.trim();if(!c)return;D.updates.push({id:uid(),tabId:mCtx.tabId,date:d||today(),content:c});sv();clM();rr();toast('업데이트 추가됨')}
+function sAE(){var dir=document.getElementById('med').value,t=document.getElementById('met').value.trim(),s=document.getElementById('mes').value.trim(),b=document.getElementById('meb').value.trim(),dt=document.getElementById('medt').value;if(!t||!s)return;D.emails.push({id:uid(),tabId:mCtx.tabId,dir:dir,to:t,subject:s,body:b,date:dt||today()});sv();clM();rr();toast('이메일 추가됨')}
+function sAF(){var n=document.getElementById('mfn').value.trim(),s=document.getElementById('mfs').value.trim(),m=document.getElementById('mfm').value.trim();if(!n)return;D.files.push({id:uid(),tabId:mCtx.tabId,name:n,size:s||'—',note:m});sv();clM();rr();toast('자료 추가됨')}
+function sATL(){var t=document.getElementById('mtt').value.trim(),w=parseInt(document.getElementById('mtw').value),c=document.getElementById('mtc').value||'#3a6bc8';if(!t)return;D.timeline.push({id:uid(),month:mCtx.month,week:w,text:t,color:c});sv();clM();rr();toast('추가됨')}
+
+function exportAll(){var o='[넥스트 기술 패권 — 기획 위키]\n\n';D.tabs.filter(function(t){return!t.fixed}).forEach(function(t){o+='\n========================================\n'+t.icon+' '+t.name+'\n========================================\n';var p=D.plans.find(function(x){return x.tabId===t.id});if(p)o+='\n📰 기획안: '+p.title+'\n'+p.body+'\n';var us=D.updates.filter(function(u){return u.tabId===t.id});if(us.length){o+='\n📋 업데이트\n';us.forEach(function(u){o+='['+u.date+'] '+u.content+'\n'})}var fs=D.files.filter(function(f){return f.tabId===t.id});if(fs.length){o+='\n📎 자료\n';fs.forEach(function(f){o+='- '+f.name+' ('+f.size+')\n'})}});navigator.clipboard.writeText(o).then(function(){toast('전체 내용이 클립보드에 복사되었습니다')})}
+
+ld();if(!D.tg)D.tg={};if(!D.updates)D.updates=[];at=D.tabs[0]?D.tabs[0].id:'home';rr();
+</script>
+</body>
+</html>
